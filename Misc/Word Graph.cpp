@@ -1,6 +1,3 @@
-#pragma GCC optimize ("O3")
-#pragma GCC target ("sse4")
-
 #include <bits/stdc++.h>
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/pb_ds/assoc_container.hpp>
