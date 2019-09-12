@@ -8,7 +8,7 @@ using namespace __gnu_pbds;
 using namespace __gnu_cxx;
 
 //mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-template <class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+//template <class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
 
 typedef vector<int> vi;
 typedef vector<vi> vii;
