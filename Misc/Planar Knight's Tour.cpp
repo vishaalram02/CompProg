@@ -1,6 +1,3 @@
-#pragma GCC optimize ("O3")
-#pragma GCC target ("sse4")
-
 #include <bits/stdc++.h>
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -29,7 +26,7 @@ typedef pair<int,int> pii;
 #define allr(c) (c).rbegin(),(c).rend()
 #define newl '\n'
 
-const int n = 7;
+const int n = 8;
 int mx = 0;
 int ans[n][n];
 int mov[n][n];
@@ -43,15 +40,24 @@ bool fit(int xx, int yy){
     return (0<=xx && xx<n && 0<=yy && yy<n);
 }
 
+bool badfit(int xx, int yy, int i){
+    bool ok = 1;
+    for(auto u:bad[i]){
+        int x1 = xx+u.f.f, y1 = yy+u.f.s;
+        if(fit(x1,y1) && mov[x1][y1] == u.s) ok = 0;
+    }
+    return ok;
+}
+
 bool cmp(int a, int b){
     int acnt = 0, bcnt = 0, x1, y1;
     x1 = x + xm[a]; y1 = y + ym[a];
     for(int i=0;i<8;++i){
-        if(fit(x1+xm[i],y1+ym[i]) && !ans[x1+xm[i]][y1+ym[i]]) ++acnt;
+        if(fit(x1+xm[i],y1+ym[i]) && !ans[x1+xm[i]][y1+ym[i]] && badfit(x1,y1,i)) ++acnt;
     }
     x1 = x + xm[b]; y1 = y + ym[b];
     for(int i=0;i<8;++i){
-        if(fit(x1+xm[i],y1+ym[i]) && !ans[x1+xm[i]][y1+ym[i]]) ++bcnt;
+        if(fit(x1+xm[i],y1+ym[i]) && !ans[x1+xm[i]][y1+ym[i]] && badfit(x1,y1,i)) ++bcnt;
     }
     return acnt < bcnt;
 }
@@ -59,33 +65,20 @@ bool cmp(int a, int b){
 void dfs(int cur){
     ans[x][y] = cur;
 
-    mx = max(mx,cur);
-    cout << lol++ << " " << mx << newl;
-
-   if(cur == 24){
+    if(cur > mx){
+        cout << cur << newl;
+        mx = cur;
+        
         for(int i=0;i<n;++i){
-            for(int j=0;j<n;++j){
-                cout << ans[i][j];
-                if(ans[i][j] < 10) cout << "  ";
-                else cout << " ";
-            }
+            for(int j=0;j<n;++j) cout << ans[i][j] << " ";
             cout << newl;
         }
-        exit(0);
     }
-
 
     vector<int> m;
     for(int i=0;i<8;++i){
         int x1 = x+xm[i], y1 = y+ym[i];
-        if(fit(x1,y1) && !ans[x1][y1]){
-            bool ok = 1;
-            for(auto u:bad[i]){
-                int x2 = x+u.f.f, y2 = y+u.f.s;
-                if(fit(x2,y2) && mov[x2][y2] == u.s) ok = 0;
-            }
-            if(ok) m.pb(i);
-        }
+        if(fit(x1,y1) && !ans[x1][y1] && badfit(x,y,i)) m.pb(i);
     }
     sort(all(m),cmp);
 
