@@ -29,7 +29,7 @@ typedef pair<int,int> pii;
 #define allr(c) (c).rbegin(),(c).rend()
 #define newl '\n'
 
-vector<int> adj[172787];
+vi adj[172787];
 vector<string> v;
 int n;
 
@@ -108,7 +108,7 @@ int main(){ sync;
 
 
         for(int j=0;j<p.size();++j){
-            vector<string>::iterator it=lower_bound(all(v),p[j]);
+            auto it=lower_bound(all(v),p[j]);
             if(p[j] != v[i] && (*it)==p[j]) adj[i].pb(it-v.begin());
 
         }
