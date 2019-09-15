@@ -54,9 +54,6 @@ void dfs(int v, int p){
 }
 
 int main(){ sync;
-   // ifstream cin("/Users/Vishaal Ram/Downloads/input.txt");
-   // ofstream cout("/Users/Vishaal Ram/Downloads/output.txt");
-
     int n; cin >> n;
     for(int i=0;i<n-1;++i){
         int x,y; cin >> x >> y;
